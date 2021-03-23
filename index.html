@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="Content-Security-Policy"
+      content="default-src: http: https: 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Giphy API</title>
+    <style>
+      html {
+        font-size: 20px;
+        line-height: 1.6;
+        font-family: "fira code";
+        text-align: center;
+        background-color:rgb(253, 209, 127);
+      }
+      form * {
+        font-family: inherit;
+        font-size: inherit;
+      }
+      img {
+        width: 100%;
+        max-width: 100%;
+      }
+      .conteiner{
+        margin:8em auto;
+        background-color: rgb(94, 94, 180);
+        color: white;
+        width:600px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 3px 3px 1px #111;
+      }
+
+      button {
+        background-color: rgb(255, 123, 0);
+        color:white;
+        cursor: pointer;
+        margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="conteiner">
+      <h1>Bem-vindo ao RandomGifnator 7000</h1>
+      <form action="">
+        <button>Atualizar</button>
+      </form>
+      <div class="out"></div>
+     
+    </div>
+    </main>
+    <script>
+      let APIKEY = "sc6kJig4Eus3J42Gu7Jhhu8EfQMKPNay";
+      // you will need to get your own API KEY
+      // https://developers.giphy.com/dashboard/
+
+      let url = `https://api.giphy.com/v1/gifs/random?api_key=${APIKEY}&limit=1&q=`;
+      console.log(url);
+      fetch(url)
+        .then((response) => response.json())
+        .then((content) => {
+          //  data, pagination, meta
+          console.log(content.data);
+          console.log("META", content.meta);
+          let img = document.createElement("img");
+          img.style.width = "500px";
+          img.src = content.data.images.downsized.url;
+          let out = document.querySelector(".out");
+          out.appendChild(img);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    </script>
+  </body>
+</html>
